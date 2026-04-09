@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { brands, categories, initialCustomers, initialProducts, paymentMethods } from './mockData'
-import logo from '../Logo.jpg'
+import logo from '../logo.jpg' // Asegúrate que en el disco se llame igual
 
 const currency = new Intl.NumberFormat('es-AR', {
   style: 'currency',

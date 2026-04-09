@@ -1,5 +1,5 @@
 import { useDeferredValue, useEffect, useState } from 'react'
-import logo from '../../Logo.jpg'
+import logo from '../../logo.jpg'
 import {
   brands,
   categories,
