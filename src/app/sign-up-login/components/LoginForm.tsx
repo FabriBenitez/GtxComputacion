@@ -27,21 +27,7 @@ const demoCredentials: DemoCredential[] = [
     email: 'martin@techops.store',
     password: 'admin2026',
     color: 'text-primary',
-  },
-  {
-    role: 'vendedor',
-    roleLabel: 'Vendedor',
-    email: 'sofia@techops.store',
-    password: 'vendedor2026',
-    color: 'text-success',
-  },
-  {
-    role: 'stock',
-    roleLabel: 'Gestion Stock',
-    email: 'lucas@techops.store',
-    password: 'stock2026',
-    color: 'text-warning',
-  },
+  }
 ]
 
 export default function LoginForm() {
@@ -210,7 +196,7 @@ export default function LoginForm() {
               key={credential.role}
               className="grid grid-cols-3 items-center border-b border-border px-4 py-3 last:border-0 hover:bg-muted/20"
             >
-              <span className={`text-xs font-semibold ${credential.color}`}>{credential.roleLabel}</span>
+              <span className={`text-sm font-semibold ${credential.color}`}>{credential.roleLabel}</span>
               <div className="flex items-center gap-1.5">
                 <span className="truncate font-mono text-[11px] text-muted-foreground">{credential.email}</span>
                 <button
@@ -230,7 +216,7 @@ export default function LoginForm() {
                 <button
                   type="button"
                   onClick={() => autofill(credential)}
-                  className="rounded-md border border-primary/20 px-2.5 py-1 text-[11px] font-semibold text-primary transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary/80"
+                  className="rounded-md border border-primary/20 px-2.5 py-1 text-sm font-semibold text-primary transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary/80"
                 >
                   Usar
                 </button>

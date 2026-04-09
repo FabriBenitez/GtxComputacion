@@ -1,4 +1,4 @@
-'use client'
+/*'use client'
 
 import { useState } from 'react'
 import AppLayout from '@/components/AppLayout'
@@ -54,7 +54,7 @@ function LeadDetail({
       <div className="w-full max-w-md rounded-2xl bg-white shadow-modal animate-slide-up">
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h2 className="text-lg font-bold text-foreground">Lead WhatsApp</h2>
-          <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted"><X size={16} /></button>
+          <button onClick={onClose} type="button" aria-label="Cerrar modal" className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted"><X size={16} /></button>
         </div>
         <div className="space-y-4 p-6">
           <div className="flex items-center gap-3">
@@ -83,14 +83,14 @@ function LeadDetail({
             <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Actualizar estado</p>
             <div className="grid grid-cols-3 gap-2">
               {(Object.keys(statusConfig) as Lead['status'][]).map((status) => (
-                <button key={status} onClick={() => onStatusChange(lead.id, status)} className={`rounded-lg border py-2 text-xs font-semibold transition-all ${lead.status === status ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted'}`}>{statusConfig[status].label}</button>
+                <button key={status} onClick={() => onStatusChange(lead.id, status)} type="button" className={`rounded-lg border py-2 text-xs font-semibold transition-all ${lead.status === status ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted'}`}>{statusConfig[status].label}</button>
               ))}
             </div>
           </div>
         </div>
         <div className="flex gap-3 border-t border-border px-6 py-4">
           <a href={waLink} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#22c55e]"><MessageCircle size={15} />Responder</a>
-          <button onClick={onClose} className="btn-secondary flex-1 text-sm">Cerrar</button>
+          <button onClick={onClose} type="button" className="btn-secondary flex-1 text-sm">Cerrar</button>
         </div>
       </div>
     </div>
@@ -150,9 +150,9 @@ export default function WhatsAppPage() {
             <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por nombre, producto o telefono..." className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-3 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30" />
           </div>
           <div className="flex flex-wrap gap-2">
-            <button onClick={() => setFilterStatus('all')} className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${filterStatus === 'all' ? 'border-primary bg-primary text-white' : 'border-border bg-white text-muted-foreground hover:bg-muted'}`}>Todos</button>
+            <button onClick={() => setFilterStatus('all')} type="button" className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${filterStatus === 'all' ? 'border-primary bg-primary text-white' : 'border-border bg-white text-muted-foreground hover:bg-muted'}`}>Todos</button>
             {(Object.keys(statusConfig) as Lead['status'][]).map((status) => (
-              <button key={status} onClick={() => setFilterStatus(status)} className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${filterStatus === status ? 'border-primary bg-primary text-white' : 'border-border bg-white text-muted-foreground hover:bg-muted'}`}>{statusConfig[status].label}</button>
+              <button key={status} onClick={() => setFilterStatus(status)} type="button" className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${filterStatus === status ? 'border-primary bg-primary text-white' : 'border-border bg-white text-muted-foreground hover:bg-muted'}`}>{statusConfig[status].label}</button>
             ))}
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function WhatsAppPage() {
                 </div>
                 <div className="flex gap-2">
                   <a href={waLink} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-[#25D366]/20 bg-[#25D366]/10 py-2 text-xs font-semibold text-[#128C7E] transition-colors hover:bg-[#25D366]/20"><MessageCircle size={12} />Responder</a>
-                  <button onClick={() => setSelectedLead(lead)} className="btn-secondary flex-1 py-2 text-xs"><Eye size={12} />Ver</button>
+                  <button onClick={() => setSelectedLead(lead)} type="button" aria-label={`Ver detalles de ${lead.name}`} className="btn-secondary flex-1 py-2 text-xs"><Eye size={12} />Ver</button>
                 </div>
               </div>
             )
@@ -193,4 +193,4 @@ export default function WhatsAppPage() {
       {selectedLead ? <LeadDetail lead={selectedLead} onClose={() => setSelectedLead(null)} onStatusChange={updateStatus} /> : null}
     </AppLayout>
   )
-}
+}*/

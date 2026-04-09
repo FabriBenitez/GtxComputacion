@@ -40,8 +40,6 @@ const navItems: NavItem[] = [
   { id: 'stock', label: 'Control de Stock', href: '/stock', icon: AlertTriangle, group: 'Inventario', badge: 7, badgeVariant: 'destructive' },
   { id: 'precios', label: 'Gestion de Precios', href: '/precios', icon: Tag, group: 'Inventario' },
   { id: 'catalogo', label: 'Catalogo Online', href: '/catalogo', icon: Globe, group: 'Marketing' },
-  { id: 'whatsapp', label: 'WhatsApp Leads', href: '/whatsapp', icon: MessageCircle, group: 'Marketing', badge: 12, badgeVariant: 'primary' },
-  { id: 'configuracion', label: 'Configuracion', href: '/configuracion', icon: Settings, group: 'Sistema' },
 ]
 
 const groups = ['Principal', 'Ventas', 'Inventario', 'Marketing', 'Sistema']
@@ -54,7 +52,7 @@ export default function Sidebar() {
     variant === 'destructive'
       ? 'bg-destructive/10 text-destructive'
       : 'bg-primary/10 text-primary'
-
+      
   return (
     <aside
       className={`relative flex shrink-0 flex-col border-r border-border bg-white transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}
@@ -116,9 +114,6 @@ export default function Sidebar() {
               <p className="truncate text-xs font-semibold text-foreground">Martin Rodriguez</p>
               <p className="text-[10px] text-muted-foreground">Admin</p>
             </div>
-            <button className="text-muted-foreground transition-colors hover:text-destructive">
-              <LogOut size={14} />
-            </button>
           </div>
         ) : (
           <button className="sidebar-nav-item w-full justify-center px-0" title="Cerrar sesion">
