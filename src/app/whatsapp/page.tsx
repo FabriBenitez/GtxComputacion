@@ -1,4 +1,4 @@
-/*'use client'
+'use client'
 
 import { useState } from 'react'
 import AppLayout from '@/components/AppLayout'
@@ -193,4 +193,4 @@ export default function WhatsAppPage() {
       {selectedLead ? <LeadDetail lead={selectedLead} onClose={() => setSelectedLead(null)} onStatusChange={updateStatus} /> : null}
     </AppLayout>
   )
-}*/
+}
