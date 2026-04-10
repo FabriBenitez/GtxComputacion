@@ -1,3 +1,15 @@
+export const currency = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  maximumFractionDigits: 0,
+})
+
+export const compactCurrency = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  notation: 'compact',
+})
+
 export const initialProducts = [
   {
     id: 1,
