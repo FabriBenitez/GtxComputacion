@@ -75,7 +75,7 @@ function SaleDetail({ sale, onClose }: SaleDetailProps) {
             <h2 className="text-lg font-bold text-foreground">Venta {sale.number}</h2>
             <p className="text-xs text-muted-foreground">{sale.date} · {sale.time} · {sale.seller}</p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground"><X size={16} /></button>
+          <button onClick={onClose} aria-label="Cerrar detalle de venta" className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground"><X size={16} /></button>
         </div>
         <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
@@ -146,19 +146,19 @@ export default function VentasPage() {
 
   return (
     <AppLayout>
-      <div className="max-w-screen-2xl mx-auto px-6 lg:px-8 xl:px-10 py-6 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="max-w-screen-2xl mx-auto px-4 py-5 space-y-6 sm:px-6 lg:px-8 xl:px-10 sm:py-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground tracking-tight">Historial de Ventas</h1>
             <p className="text-sm text-muted-foreground mt-0.5">{mockSales.length} ventas registradas</p>
           </div>
-          <div className="flex gap-2">
-            <button className="btn-secondary text-sm"><Calendar size={14} /> Filtrar fecha</button>
-            <button className="btn-secondary text-sm"><Download size={14} /> Exportar</button>
+          <div className="grid grid-cols-1 gap-2 sm:flex">
+            <button className="btn-secondary justify-center text-sm"><Calendar size={14} /> Filtrar fecha</button>
+            <button className="btn-secondary justify-center text-sm"><Download size={14} /> Exportar</button>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { label: 'Ventas hoy', value: formatCurrency(totalToday), sub: `${mockSales.filter(s => s.date === '09/04/2026').length} transacciones`, variant: 'success' },
             { label: 'Total semana', value: formatCurrency(totalWeek), sub: 'Últimos 7 días', variant: 'primary' },
@@ -178,8 +178,8 @@ export default function VentasPage() {
           ))}
         </div>
 
-        <div className="bg-white rounded-xl border border-border p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white rounded-xl border border-border p-4 sm:p-5">
+          <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <h3 className="font-bold text-foreground text-sm">Ventas diarias — Semana actual</h3>
               <p className="text-xs text-muted-foreground mt-0.5">Ingresos por día</p>
@@ -202,12 +202,12 @@ export default function VentasPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-wrap gap-3 items-center">
-          <div className="relative flex-1 min-w-[200px]">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="relative w-full flex-1 min-w-[200px]">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por cliente o número..." className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {[{ id: 'all', label: 'Todos' }, { id: 'efectivo', label: 'Efectivo' }, { id: 'transferencia', label: 'Transferencia' }, { id: 'mercadopago', label: 'Mercado Pago' }].map(f => (
               <button key={f.id} onClick={() => setSelectedMethod(f.id as 'all' | 'efectivo' | 'transferencia' | 'mercadopago')} className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-all ${selectedMethod === f.id ? 'bg-primary text-white border-primary' : 'bg-white border-border text-muted-foreground hover:bg-muted'}`}>
                 {f.label}
@@ -216,8 +216,9 @@ export default function VentasPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-border overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="space-y-3">
+          <div className="hidden overflow-hidden rounded-xl border border-border bg-white md:block">
+            <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/30">
                 <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">N°</th>
@@ -251,7 +252,7 @@ export default function VentasPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <button className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground opacity-0 group-hover:opacity-100">
+                      <button aria-label={`Ver detalle de la venta ${sale.number}`} className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-muted transition-colors text-muted-foreground opacity-0 group-hover:opacity-100">
                         <Eye size={13} />
                       </button>
                     </td>
@@ -260,6 +261,55 @@ export default function VentasPage() {
               })}
             </tbody>
           </table>
+          </div>
+
+          <div className="grid gap-3 md:hidden">
+            {filtered.map((sale) => {
+              const cfg = methodConfig[sale.method]
+              return (
+                <button
+                  key={sale.id}
+                  onClick={() => setSelectedSale(sale)}
+                  className="rounded-xl border border-border bg-white p-4 text-left shadow-sm transition hover:bg-muted/20"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-mono text-sm font-bold text-primary">{sale.number}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {sale.date} · {sale.time}
+                      </p>
+                    </div>
+                    <span className={sale.status === 'completed' ? 'badge badge-success' : 'badge badge-destructive'}>
+                      {sale.status === 'completed' ? 'Completada' : 'Cancelada'}
+                    </span>
+                  </div>
+
+                  <div className="mt-3 space-y-2">
+                    <div>
+                      <p className="text-xs text-muted-foreground">Cliente</p>
+                      <p className="font-medium text-foreground">{sale.customer}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Productos</p>
+                      <p className="text-sm text-muted-foreground">
+                        {sale.items.map((i) => `${i.name} x${i.qty}`).join(', ')}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-3">
+                    <span className={cfg.class}>
+                      <cfg.icon size={10} className="mr-1 inline" />
+                      {cfg.label}
+                    </span>
+                    <span className="font-mono text-base font-bold text-foreground">
+                      {formatCurrency(sale.total)}
+                    </span>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
 

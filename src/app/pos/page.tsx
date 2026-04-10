@@ -175,11 +175,11 @@ export default function POSPage() {
 
   return (
     <AppLayout>
-      <div className="h-[calc(100vh-4rem)] overflow-hidden bg-slate-50">
-        <div className="grid h-full grid-cols-1 xl:grid-cols-[1.7fr_0.95fr]">
-          <section className="flex min-h-0 flex-col border-r border-slate-200 bg-slate-50">
-            <div className="border-b border-slate-200 bg-white px-5 py-4">
-              <h1 className="text-[2rem] font-extrabold tracking-[-0.03em] text-slate-900">
+      <div className="min-h-[calc(100vh-4rem)] bg-slate-50 lg:h-[calc(100vh-4rem)] lg:overflow-hidden">
+        <div className="grid min-h-full grid-cols-1 xl:grid-cols-[1.7fr_0.95fr]">
+          <section className="flex min-h-0 flex-col border-b border-slate-200 bg-slate-50 xl:border-b-0 xl:border-r">
+            <div className="border-b border-slate-200 bg-white px-4 py-4 sm:px-5">
+              <h1 className="text-[1.7rem] font-extrabold tracking-[-0.03em] text-slate-900 sm:text-[2rem]">
                 Punto de Venta
               </h1>
 
@@ -194,7 +194,7 @@ export default function POSPage() {
               </div>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+            <div className="min-h-0 flex-1 overflow-y-auto px-3 py-4 sm:px-4">
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-3">
                 {filteredProducts.map((product) => {
                   const badge = stockBadge(product)
@@ -235,9 +235,9 @@ export default function POSPage() {
             </div>
           </section>
 
-          <aside className="flex min-h-0 flex-col bg-white">
+          <aside className="flex min-h-0 flex-col bg-white xl:max-h-full">
             <div className="border-b border-slate-200 px-4 py-4">
-              <div className="flex items-center gap-2 text-[1.75rem] font-extrabold tracking-[-0.03em] text-slate-900">
+              <div className="flex items-center gap-2 text-[1.4rem] font-extrabold tracking-[-0.03em] text-slate-900 sm:text-[1.75rem]">
                 <ShoppingCart className="h-6 w-6 text-[#0f4c81]" />
                 <span>Carrito</span>
               </div>
@@ -255,7 +255,7 @@ export default function POSPage() {
 
             <div className="min-h-0 flex-1 overflow-y-auto">
               {cart.length ? (
-                <div className="space-y-3 px-4 py-4">
+                <div className="space-y-3 px-3 py-4 sm:px-4">
                   {cart.map((item) => (
                     <div
                       key={item.id}
@@ -278,7 +278,7 @@ export default function POSPage() {
                         </button>
                       </div>
 
-                      <div className="mt-3 flex items-center justify-between gap-3">
+                      <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div className="inline-flex items-center rounded-xl border border-slate-200 bg-white">
                           <button
                             onClick={() => updateQuantity(item.id, item.qty - 1)}
@@ -355,16 +355,16 @@ export default function POSPage() {
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center justify-between">
-                <span className="text-[2rem] font-extrabold tracking-[-0.04em] text-slate-900">
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <span className="text-[1.65rem] font-extrabold tracking-[-0.04em] text-slate-900 sm:text-[2rem]">
                   Total
                 </span>
-                <span className="text-[2rem] font-black tracking-[-0.04em] text-slate-900">
+                <span className="text-right text-[1.65rem] font-black tracking-[-0.04em] text-slate-900 sm:text-[2rem]">
                   {currency.format(cartTotal)}
                 </span>
               </div>
 
-              <div className="mt-4 grid grid-cols-3 gap-2">
+              <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3">
                 {paymentMethods.map((method) => (
                   <button
                     key={method}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AlertTriangle,
   BarChart3,
@@ -12,12 +12,12 @@ import {
   Globe,
   LayoutDashboard,
   LogOut,
-  MessageCircle,
+  Menu,
   Package,
-  Settings,
   ShoppingCart,
   Tag,
   Users,
+  X,
 } from 'lucide-react'
 import AppLogo from './ui/AppLogo'
 
@@ -47,16 +47,30 @@ const groups = ['Principal', 'Ventas', 'Inventario', 'Marketing', 'Sistema']
 export default function Sidebar() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!mobileOpen) return undefined
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [mobileOpen])
 
   const badgeClass = (variant?: string) =>
     variant === 'destructive'
       ? 'bg-destructive/10 text-destructive'
       : 'bg-primary/10 text-primary'
-      
-  return (
-    <aside
-      className={`relative flex shrink-0 flex-col border-r border-border bg-white transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}
-    >
+
+  const sidebarContent = (
+    <>
       <div className={`flex min-h-[72px] items-center gap-3 border-b border-border px-4 py-4 ${collapsed ? 'justify-center px-2' : ''}`}>
         <AppLogo size={36} />
         {!collapsed ? <span className="truncate text-base font-bold tracking-tight text-foreground">TechOps</span> : null}
@@ -121,14 +135,54 @@ export default function Sidebar() {
           </button>
         )}
       </div>
+    </>
+  )
 
-      <button
-        onClick={() => setCollapsed((current) => !current)}
-        className="absolute -right-3 top-[76px] z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-white shadow-sm transition-colors hover:bg-muted"
-        aria-label={collapsed ? 'Expandir menu' : 'Colapsar menu'}
+  return (
+    <>
+      <div className="fixed left-4 top-4 z-50 lg:hidden">
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-white text-foreground shadow-sm"
+          aria-label="Abrir menu"
+        >
+          <Menu size={20} />
+        </button>
+      </div>
+
+      {mobileOpen ? (
+        <div
+          className="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-[1px] lg:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      ) : null}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-[88vw] max-w-[320px] flex-col border-r border-border bg-white transition-transform duration-300 lg:static lg:z-auto lg:w-auto lg:max-w-none ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 ${collapsed ? 'lg:w-16' : 'lg:w-64'}`}
       >
-        {collapsed ? <ChevronRight size={12} className="text-muted-foreground" /> : <ChevronLeft size={12} className="text-muted-foreground" />}
-      </button>
-    </aside>
+        <div className="flex items-center justify-end border-b border-border px-4 py-3 lg:hidden">
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted"
+            aria-label="Cerrar menu"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {sidebarContent}
+
+        <button
+          onClick={() => setCollapsed((current) => !current)}
+          className="absolute -right-3 top-[76px] z-10 hidden h-6 w-6 items-center justify-center rounded-full border border-border bg-white shadow-sm transition-colors hover:bg-muted lg:flex"
+          aria-label={collapsed ? 'Expandir menu' : 'Colapsar menu'}
+        >
+          {collapsed ? <ChevronRight size={12} className="text-muted-foreground" /> : <ChevronLeft size={12} className="text-muted-foreground" />}
+        </button>
+      </aside>
+    </>
   )
 }
